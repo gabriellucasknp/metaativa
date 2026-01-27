@@ -1,0 +1,45 @@
+{% extends 'app_metaativa/base.html' %}
+
+{% block title %}{{ comunidade.nome }} - METAATIVA{% endblock %}
+
+{% block content %}
+<h2>{{ comunidade.nome }}</h2>
+
+<div style="padding: 20px; background: #f5f5f5; border-radius: 5px;">
+    <p><strong>Esporte/Atividade:</strong> {{ comunidade.get_esporte_display }}</p>
+    <p><strong>Local:</strong> {{ comunidade.local }}</p>
+    <p><strong>Dias:</strong> {{ comunidade.dias }}</p>
+    <p><strong>Horário:</strong> {{ comunidade.horario }}</p>
+    {% if comunidade.descricao %}<p><strong>Descrição:</strong> {{ comunidade.descricao }}</p>{% endif %}
+    <p><strong>Criador:</strong> {{ comunidade.criador.username }}</p>
+    <p><strong>Total de Membros:</strong> {{ comunidade.total_membros }}</p>
+    <p><strong>Membros:</strong> 
+        {{ comunidade.criador.username }}
+        {% for membro in comunidade.membros.all %}
+            , {{ membro.username }}
+        {% empty %}
+            (Nenhum membro além do criador)
+        {% endfor %}
+    </p>
+</div>
+
+<div style="margin-top: 20px;">
+    {% if user == comunidade.criador %}
+        <p style="color: green;"><strong>✓ Você é o criador desta comunidade</strong></p>
+    {% elif user in comunidade.membros.all %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="sair">
+            <input type="submit" value="Sair da Comunidade" class="btn">
+        </form>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="entrar">
+            <input type="submit" value="Entrar na Comunidade" class="btn">
+        </form>
+    {% endif %}
+</div>
+
+<p style="margin-top: 20px;"><a href="{% url 'visualizar_comunidades' %}">Voltar às Comunidades</a></p>
+{% endblock %}
