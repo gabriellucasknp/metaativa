@@ -1,0 +1,27 @@
+{% extends 'app_metaativa/base.html' %}
+
+{% block title %}Comunidades - METAATIVA{% endblock %}
+
+{% block content %}
+<h2>Todas as Comunidades</h2>
+
+{% if comunidades %}
+    <ul style="list-style: none; padding: 0;">
+    {% for comunidade in comunidades %}
+        <li style="padding: 20px; background: #f5f5f5; margin-bottom: 15px; border-radius: 5px; border-left: 5px solid #667eea;">
+            <h3>{{ comunidade.nome }}</h3>
+            <p><strong>Esporte:</strong> {{ comunidade.get_esporte_display }}</p>
+            <p><strong>Local:</strong> {{ comunidade.local }}</p>
+            <p><strong>Dias:</strong> {{ comunidade.dias }} | <strong>Horário:</strong> {{ comunidade.horario }}</p>
+            {% if comunidade.descricao %}<p><strong>Descrição:</strong> {{ comunidade.descricao }}</p>{% endif %}
+            <p><strong>Membros:</strong> {{ comunidade.total_membros }}</p>
+            <a href="{% url 'detalhes_comunidade' comunidade.pk %}" class="btn">Ver Detalhes</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nenhuma comunidade disponível. <a href="{% url 'criar_comunidade' %}">Crie uma!</a></p>
+{% endif %}
+
+<p><a href="{% url 'menu_principal' %}">Voltar</a></p>
+{% endblock %}

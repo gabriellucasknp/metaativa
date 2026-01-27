@@ -1,0 +1,33 @@
+{% extends 'app_metaativa/base.html' %}
+
+{% block title %}Menu Principal - METAATIVA{% endblock %}
+
+{% block content %}
+<h2>Menu Principal</h2>
+
+<p>Bem-vindo ao METAATIVA! Escolha uma das opções abaixo:</p>
+
+<div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+    <a href="{% url 'editar_perfil' %}" class="btn">✏️ Editar Perfil</a>
+    <a href="{% url 'criar_comunidade' %}" class="btn">➕ Criar Comunidade</a>
+    <a href="{% url 'visualizar_comunidades' %}" class="btn">👥 Ver Comunidades</a>
+</div>
+
+<hr style="margin: 30px 0;">
+
+<h3>Comunidades Recentes</h3>
+{% if comunidades %}
+    <ul style="list-style: none; padding: 0;">
+    {% for comunidade in comunidades|slice:":5" %}
+        <li style="padding: 15px; background: #f5f5f5; margin-bottom: 10px; border-radius: 5px;">
+            <strong>{{ comunidade.nome }}</strong> - {{ comunidade.get_esporte_display }}<br>
+            <small>📍 {{ comunidade.local }} | 🕐 {{ comunidade.horario }} | 👥 {{ comunidade.total_membros }} membros</small><br>
+            <a href="{% url 'detalhes_comunidade' comunidade.pk %}" class="btn" style="margin-top: 10px; display: inline-block;">Ver Detalhes</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Nenhuma comunidade disponível ainda. <a href="{% url 'criar_comunidade' %}">Crie uma!</a></p>
+{% endif %}
+
+{% endblock %}
