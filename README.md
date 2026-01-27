@@ -1,6 +1,6 @@
-# METAATIVA — Apresentação
+# METAATIVA — Guia de Aula e Entrevista
 
-
+Este README foi escrito para você explicar o projeto como se estivesse ensinando alguém ou apresentando em uma entrevista. Ele mostra **o que foi feito, por que foi feito e como rodar**.
 
 ## 🚦 Visão Geral
 - **Stack**: Django 4, Python 3.13, SQLite (dev), HTML/CSS puro.
@@ -90,4 +90,3 @@ python manage.py test
 - Adicionar upload de fotos e notificações.
 - Expor API REST (Django REST Framework) para mobile.
 - Adicionar testes de integração para fluxos de comunidade.
-
